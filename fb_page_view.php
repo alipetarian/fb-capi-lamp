@@ -1,6 +1,8 @@
 <?php
   $event_id = md5(uniqid(rand(), true));
-  echo "EVENT_ID => $event_id <br/>";
+  if($show_php_logs == TRUE){
+    echo "EVENT_ID => $event_id <br/>";
+  }
 ?>
 
 <script>
@@ -39,10 +41,11 @@ if(!empty($test_event_code)){
   $data["test_event_code"] = $test_event_code;
 }
 
-echo "<h3>FB PageView Event Data</h3>";
-
-echo '<pre>' . print_r( $data, true ) . '</pre>';
-echo '<pre>' . print_r( $_COOKIE, true ) . '</pre>';
+if($show_php_logs == TRUE){
+  echo "<h3>FB PageView Event Data</h3>";
+  echo '<pre>' . print_r( $data, true ) . '</pre>';
+  echo '<pre>' . print_r( $_COOKIE, true ) . '</pre>';
+}
 
 $dataString=json_encode($data);
 $ch = curl_init($url);                                                                      
@@ -56,9 +59,9 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 
 $response = curl_exec($ch);
 
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-
-echo "<br> AFTER RESPONSE - 1 <br/>";
+if($show_php_logs == TRUE){
+  echo "<pre>";
+  print_r($response);
+  echo "</pre>";
+}
 ?>

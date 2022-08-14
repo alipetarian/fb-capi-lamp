@@ -1,9 +1,8 @@
 <?php 
 $event_id = md5(uniqid(rand(), true));
-echo "EVENT_ID => $event_id <br/>";
-?>
-
-<?php
+if($show_php_logs == TRUE){
+  echo "EVENT_ID => $event_id <br/>";
+}
 
 $data = array( // main object
   "data" => array( // data array
@@ -30,13 +29,11 @@ $data = array( // main object
 if(!empty($test_event_code)){
   $data["test_event_code"] = $test_event_code;
 }
-
+if($show_php_logs == TRUE){
 echo "<h3>FB PURCHASE Event Data</h3>";
-
 echo '<pre>' . print_r( $data, true ) . '</pre>';
-// print_r($data);
 echo '<pre>' . print_r( $_COOKIE, true ) . '</pre>';
-
+}
 
 $dataString=json_encode($data);
 $ch = curl_init($url);                                                                      
@@ -50,9 +47,9 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 
 $response = curl_exec($ch);
 
-echo "<pre>";
-print_r($response);
-echo "</pre>";
-
-echo "<br> AFTER RESPONSE - 1 <br/>";
+if($show_php_logs == TRUE){
+  echo "<pre>";
+  print_r($response);
+  echo "</pre>";
+}
 ?>
