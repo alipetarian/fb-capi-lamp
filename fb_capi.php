@@ -1,6 +1,6 @@
 <?php
 $FB_PIXEL_ID="544951920257076";
-$FB_CAPI_TOKEN="EAADEZCTa2EW4BAEGLZBDjVNOSINdZAjrBqoyg1vhvPiTbCrtVW3TrVHAIZA3VSNOIfnFDfLLoOADLIY6lholSS1LlbyvjtzUmPfLtCjWJzZCGgpYuWMR9aIZA2jL6K8iaHfjVlkazxGTM1pcHW0ZCV7pdnw2Vv3qIur52bIsCZC8FyThzUN0uBlH";
+$FB_CAPI_TOKEN="EAADEZCTa2EW4BAMTLv9504qB4Po5GkOLjyWZCAmkbiCzr30m8dObu2hzvImOboQSG4cctbhHw9TMcTMkYLT8O9QN1bNrwmM2tKWb4uMGyhf01eZAvyXNo8KPYDlfDjBgZAb8pZCW9NN4zgoB298QuHZCsqQO1sjecStStUDs1OrbiqQEony6XB";
 $show_php_logs= FALSE;
 if(isset($_GET['php_logs']) && !empty($_GET['php_logs'])){
   $show_php_logs= TRUE;
@@ -65,7 +65,7 @@ if(isset($_COOKIE['_fbc'])){
   }
 }
 
-$order_total =  0.00;
+$order_total =  10.00;
 
 if(isset($_GET['order_total']) && !empty($_GET['order_total'])){
   $order_total = $_GET['order_total'];
@@ -76,6 +76,7 @@ if(isset($_GET['order_total']) && !empty($_GET['order_total'])){
 }
 
 $test_event_code="";
+
 if(isset($_GET['test_event_code'])){
   $test_event_code = $_GET['test_event_code'];
   if($show_php_logs == TRUE){
