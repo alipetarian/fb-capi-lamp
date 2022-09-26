@@ -1,6 +1,6 @@
 <?php
-$FB_PIXEL_ID="3252309228423500";
-$FB_CAPI_TOKEN="EAAH48ej8zx0BABZCibr9yZCpP3pzBDG6m98Aw4NfUMgZCAHulirRGDLZBJue6HSHlKE2VROd0EXzYMrZCOS5PHw9QYv0v9qiU4S3470xqadkvYbOLzsGpxoLITQ8JPCQ81ZBKqVycNAePOjxMquawiW7YbOKOxbL0u2ZCXGlFC8ZA3NTtyZCVIuCk";
+$FB_PIXEL_ID="326591822583755";
+$FB_CAPI_TOKEN="EAADEZCTa2EW4BAOhelslLtljsKWhdjCSycd1V87ypGrA3ZBVszNk232fF9xQ516S8ZBsiPOKzzbOIsmJXiGDc5bUHQo2NqOJtktVmQbEqGqZACy8ePQsO6X1RZBM115LW4IZCORofYkhwvAGY7wDIqvurzqUDbKCy5ssMylzM1vfD4JywVRHrq";
 $show_php_logs= FALSE;
 if(isset($_GET['php_logs']) && !empty($_GET['php_logs'])){
   $show_php_logs= TRUE;
@@ -14,6 +14,35 @@ $ip= $_SERVER['REMOTE_ADDR'];
 if($show_php_logs == TRUE){
   echo "IP => $ip <br/>";
 }
+
+
+$ip_data = @json_decode(file_get_contents(
+  "http://www.geoplugin.net/json.gp?ip=" . $ip));
+ 
+$country= strtolower($ip_data->geoplugin_countryCode);
+$countryHashed= hash('sha256', $country);
+
+if($show_php_logs == TRUE){
+  echo "COUNTRY => $country <br/>";
+  echo "COUNTRY_HASHED => $countryHashed <br/>";
+}
+
+$city= strtolower($ip_data->geoplugin_city);
+$cityHashed= hash('sha256', $city);
+
+if($show_php_logs == TRUE){
+  echo "CITY => $city <br/>";
+  echo "CITY_HASHED => $cityHashed <br/>";
+}
+
+$state= strtolower($ip_data->geoplugin_regionCode);
+$stateHashed= hash('sha256', $state);
+
+if($show_php_logs == TRUE){
+  echo "STATE => $state <br/>";
+  echo "STATE_HASHED => $stateHashed <br/>";
+}
+
 
 $browser_agent = $_SERVER['HTTP_USER_AGENT'];
 if($show_php_logs == TRUE){
@@ -46,7 +75,7 @@ if(isset($_COOKIE['_fbp'])){
     echo "COOKIE_FBP => $fbp <br/>";
   }
 } else{
-  $fbp= "";
+  $fbp = 'fb.1.'.floor(microtime(true) * 1000).'.'.rand(1000000000, 2147483647);
   if($show_php_logs == TRUE){
     echo "GENERATED_FBP => $fbp <br/>";
   }
@@ -58,10 +87,18 @@ if(isset($_COOKIE['_fbc'])){
   if($show_php_logs == TRUE){
     echo "COOKIE_FBC => $fbc <br/>";
   }
-} else {
-  $fbc= "";
+} elseif(isset($_GET['fbclid']) && (!empty($_GET['fbclid']))) {
+  
+  $fbclid=$_GET['fbclid'];
+  $fbc = 'fb.1.'.floor(microtime(true) * 1000).'.'.$fbclid;
+
   if($show_php_logs == TRUE){
     echo "GENERATED_FBC => $fbc <br/>";
+  }
+} else{
+  $fbc="";
+  if($show_php_logs == TRUE){
+    echo "FBC can not generated as fbclid is not avialable in query params => $fbc <br/>";
   }
 }
 
